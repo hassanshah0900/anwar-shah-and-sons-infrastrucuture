@@ -1,0 +1,31 @@
+# --- Local Terraform Directories & Files ---
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# --- Authentication & Credentials ---
+# Never commit AWS credentials or sensitive var files
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# --- Plan Files ---
+# (Useful if you generate binary plan files locally)
+*.tfplan
+
+# --- Diagnostics & Logs ---
+*.log
+terraform.log
+
+# --- IDEs & Operating Systems ---
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
