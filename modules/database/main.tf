@@ -3,12 +3,12 @@ locals {
 }
 
 resource "aws_db_subnet_group" "postgresql" {
-  name       = "${locals.name_prefix}-postgresql-subnet-group"
+  name       = "${local.name_prefix}-postgresql-subnet-group"
   subnet_ids = var.private_subnet_ids
 }
 
 resource "aws_security_group" "postgresql" {
-  name   = "${locals.name_prefix}-postgresql-sg"
+  name   = "${local.name_prefix}-postgresql-sg"
   vpc_id = var.vpc_id
   ingress = [{
     security_groups = [var.app_sg_id]
@@ -26,7 +26,7 @@ resource "aws_security_group" "postgresql" {
 }
 
 resource "aws_rds_cluster" "postgresql" {
-  cluster_identifier = "${locals.name_prefix}-aurora-postgresql-cluster"
+  cluster_identifier = "${local.name_prefix}-aurora-postgresql-cluster"
   engine             = "aurora-postgresql"
   engine_mode        = "provisioned"
   engine_version     = "17"
