@@ -38,7 +38,8 @@ resource "aws_rds_cluster" "postgresql" {
   db_subnet_group_name   = aws_db_subnet_group.postgresql.name
   vpc_security_group_ids = [aws_security_group.postgresql.id]
 
-  skip_final_snapshot = var.skip_final_snapshot
+  skip_final_snapshot       = var.skip_final_snapshot
+  final_snapshot_identifier = var.skip_final_snapshot ? null : "${local.name_prefix}-aurora-postgresql-final-snapsho"
 
   storage_encrypted = true
 
