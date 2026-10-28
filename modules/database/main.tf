@@ -40,6 +40,8 @@ resource "aws_rds_cluster" "postgresql" {
 
   skip_final_snapshot = var.skip_final_snapshot
 
+  storage_encrypted = true
+
   serverlessv2_scaling_configuration {
     min_capacity = 0.5
     max_capacity = 16
