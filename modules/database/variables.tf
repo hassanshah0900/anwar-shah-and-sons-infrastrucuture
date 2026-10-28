@@ -3,11 +3,6 @@ variable "vpc_id" {
   description = "The ID of the VPC where the database subnet group and security group will be created."
 }
 
-variable "region" {
-  type        = string
-  description = "The AWS region where the resources will be deployed."
-}
-
 variable "project_name" {
   type        = string
   description = "The name of the project, used as a prefix for naming and tagging resources."
