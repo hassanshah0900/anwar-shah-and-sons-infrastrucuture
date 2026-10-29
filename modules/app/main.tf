@@ -2,6 +2,10 @@ locals {
   name_prefix = "${var.project_name}-${var.environment}"
 }
 
+data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
+
+
 data "aws_ami" "ubuntu" {
   most_recent = true
   owners      = ["099720109477"]
@@ -34,7 +38,7 @@ data "aws_iam_policy_document" "db_connect" {
     sid       = "AllowAuroraDatabaseConnect"
     effect    = "Allow"
     actions   = ["rds-db:connect"]
-    resources = [var.db_arn]
+    resources = ["arn:aws:rds-db:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:db-user:${var.db_cluster_resource_id}/${var.db_user}"]
   }
 }
 
