@@ -27,3 +27,8 @@ output "security_group_id" {
   value       = aws_security_group.postgresql.id
   type        = string
 }
+
+output "cluster_resource_id" {
+  description = "The immutable AWS resource ID of the Aurora cluster (cluster-XXXX), used to build the rds-db:connect IAM policy ARN."
+  value       = aws_rds_cluster.postgresql.cluster_resource_id
+}
