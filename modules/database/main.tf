@@ -43,6 +43,8 @@ resource "aws_rds_cluster" "postgresql" {
 
   storage_encrypted = true
 
+  iam_database_authentication_enabled = true
+
   serverlessv2_scaling_configuration {
     min_capacity = 0.5
     max_capacity = 16
