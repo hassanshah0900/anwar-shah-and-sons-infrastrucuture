@@ -125,10 +125,10 @@ resource "aws_launch_template" "app" {
 }
 
 resource "aws_lb_target_group" "app" {
-  name     = "${local.name_prefix}-app-target-group"
-  protocol = "HTTP"
-  port     = 80
-  vpc_id   = var.vpc_id
+  name_prefix = "${local.name_prefix}-tg"
+  protocol    = "HTTP"
+  port        = 80
+  vpc_id      = var.vpc_id
 
   deregistration_delay = 30
 
