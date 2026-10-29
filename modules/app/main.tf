@@ -173,7 +173,7 @@ resource "aws_autoscaling_group" "app" {
 
   launch_template {
     id      = aws_launch_template.app.id
-    version = "$Latest"
+    version = aws_launch_template.app.latest_version
   }
 
   vpc_zone_identifier = var.private_subnet_ids
@@ -193,8 +193,10 @@ resource "aws_autoscaling_group" "app" {
   instance_refresh {
     strategy = "Rolling"
     preferences {
-      min_healthy_percentage = 50
+      min_healthy_percentage = 100
+      max_healthy_percentage = 150
       instance_warmup        = 300
+      auto_rollback          = true
     }
   }
 
