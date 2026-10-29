@@ -8,11 +8,6 @@ variable "environment" {
   description = "Deployment environment (e.g., dev, staging, prod)"
 }
 
-variable "db_arn" {
-  type        = string
-  description = "ARN of the Aurora database for IAM access control"
-}
-
 variable "vpc_id" {
   type        = string
   description = "ID of the VPC where network resources are deployed"
@@ -31,4 +26,14 @@ variable "public_subnet_ids" {
 variable "private_subnet_ids" {
   type        = list(string)
   description = "List of private subnet IDs for the Auto Scaling Group"
+}
+
+variable "db_cluster_resource_id" {
+  type        = string
+  description = "The resource ID of the Aurora cluster (cluster-XXXX), used to build the rds-db:connect IAM policy ARN."
+}
+
+variable "db_user" {
+  type        = string
+  description = "The PostgreSQL user the application connects as with IAM authentication. Must exist in the database and be granted the rds_iam role."
 }
