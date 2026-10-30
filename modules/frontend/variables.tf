@@ -8,11 +8,7 @@ variable "environment" {
   description = "The deployment environment (e.g., prod, staging, dev)."
 }
 
-variable "backend_alb_domain_name" {
+variable "cloudfront_distribution_arn" {
   type        = string
-  description = "The DNS name of the Application Load Balancer serving as the backend origin."
-}
-
-variable "storage_bucket_regional_domain_name" {
-  type = string
+  description = "The ARN of the CloudFront distribution allowed to read objects from this frontend bucket via OAC."
 }
