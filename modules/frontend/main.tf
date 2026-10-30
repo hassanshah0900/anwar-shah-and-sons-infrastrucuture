@@ -47,9 +47,9 @@ resource "aws_s3_bucket_policy" "frontend" {
   policy = data.aws_iam_policy_document.s3_oac.json
 }
 
-resource "aws_cloudfront_origin_access_control" "frontend" {
-  name                              = "${local.name_prefix}-frontend-s3-oac"
-  description                       = "Secure OAC for Frontend S3 static assets"
+resource "aws_cloudfront_origin_access_control" "s3" {
+  name                              = "${local.name_prefix}-s3-oac"
+  description                       = "Secure OAC for S3 buckets"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
@@ -75,7 +75,13 @@ resource "aws_cloudfront_distribution" "main" {
   origin {
     domain_name              = aws_s3_bucket.frontend.bucket_regional_domain_name
     origin_id                = "s3-frontend-origin"
-    origin_access_control_id = aws_cloudfront_origin_access_control.frontend.id
+    origin_access_control_id = aws_cloudfront_origin_access_control.s3.id
+  }
+
+  origin {
+    domain_name              = var.storage_bucket_regional_domain_name
+    origin_id                = "storage-origin"
+    origin_access_control_id = aws_cloudfront_origin_access_control.s3.id
   }
 
   origin {
@@ -93,9 +99,8 @@ resource "aws_cloudfront_distribution" "main" {
   default_cache_behavior {
     target_origin_id       = "s3-frontend-origin"
     viewer_protocol_policy = "redirect-to-https"
-
-    allowed_methods = ["GET", "HEAD", "OPTIONS"]
-    cached_methods  = ["GET", "HEAD"]
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD"]
 
     cache_policy_id = data.aws_cloudfront_cache_policy.optimized.id
   }
@@ -108,6 +113,16 @@ resource "aws_cloudfront_distribution" "main" {
     cached_methods           = ["GET", "HEAD"]
     cache_policy_id          = data.aws_cloudfront_cache_policy.disabled.id
     origin_request_policy_id = data.aws_cloudfront_origin_request_policy.allviewer.id
+  }
+
+  ordered_cache_behavior {
+    path_pattern           = "/media/*"
+    target_origin_id       = "storage-origin"
+    viewer_protocol_policy = "redirect-to-https"
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD"]
+
+    cache_policy_id = data.aws_cloudfront_cache_policy.optimized
   }
 
   custom_error_response {
