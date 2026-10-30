@@ -7,3 +7,8 @@ variable "environment" {
   type        = string
   description = "The deployment environment (e.g., prod, staging, dev)."
 }
+
+variable "cloudfront_distribution_arn" {
+  type        = string
+  description = "The ARN of the CloudFront distribution allowed to read objects from this frontend bucket via OAC."
+}
