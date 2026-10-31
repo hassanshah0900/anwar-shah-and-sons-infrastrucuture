@@ -71,7 +71,7 @@ resource "aws_route_table_association" "private" {
 
 variable "db_subnet_cidr_blocks" {
   type    = list(string)
-  default = ["10.0.10.1/24", "10.0.10.2/24"]
+  default = ["10.0.10.0/24", "10.0.11.0/24"]
 }
 
 resource "aws_route_table" "db" {
@@ -93,7 +93,7 @@ resource "aws_route_table_association" "db" {
 
 variable "app_subnet_cidr_blocks" {
   type    = list(string)
-  default = ["10.0.20.1/24", "10.0.20.2/24"]
+  default = ["10.0.20.0/24", "10.0.21.0/24"]
 }
 
 resource "aws_subnet" "app" {
