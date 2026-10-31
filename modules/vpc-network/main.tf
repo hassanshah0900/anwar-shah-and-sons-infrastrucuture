@@ -69,3 +69,43 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.id
   subnet_id      = aws_subnet.private[count.index].id
 }
+
+variable "db_subnet_cidr_blocks" {
+  type    = list(string)
+  default = ["10.0.10.1/24", "10.0.10.2/24"]
+}
+
+resource "aws_route_table" "db" {
+  vpc_id = aws_vpc.main.id
+}
+
+resource "aws_subnet" "db" {
+  vpc_id            = aws_vpc.main.id
+  count             = 2
+  availability_zone = var.azs[count.index]
+  cidr_block        = var.db_subnet_cidr_blocks[count.index]
+}
+
+resource "aws_route_table_association" "db" {
+  count          = 2
+  route_table_id = aws_route_table.db.id
+  subnet_id      = aws_subnet.db[count.index].id
+}
+
+variable "app_subnet_cidr_blocks" {
+  type    = list(string)
+  default = ["10.0.20.1/24", "10.0.20.2/24"]
+}
+
+resource "aws_subnet" "app" {
+  count             = 2
+  vpc_id            = aws_vpc.main.id
+  availability_zone = var.azs[count.index]
+  cidr_block        = var.app_subnet_cidr_blocks[count.index]
+}
+
+resource "aws_route_table_association" "app" {
+  count          = 2
+  route_table_id = aws_route_table.private.id
+  subnet_id      = aws_subnet.app[count.index].id
+}
