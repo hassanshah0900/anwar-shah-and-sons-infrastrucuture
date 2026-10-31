@@ -2,8 +2,12 @@ locals {
   name_prefix = "${var.project_name}-${var.environment}"
 }
 
+data "aws_region" "current" {}
+
+data "aws_caller_identity" "current" {}
+
 resource "aws_s3_bucket" "storage" {
-  bucket           = "${local.name_prefix}-storage"
+  bucket           = "${local.name_prefix}-storage-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
   bucket_namespace = "account-regional"
 }
 
