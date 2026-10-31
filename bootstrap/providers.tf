@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket       = "anwar-shah-and-sons-state-915093573141-ap-south-1"
+    bucket       = "anwar-shah-and-sons-state-915093573141-ap-south-1-an"
     key          = "bootstrap/terraform.tfstate"
     region       = "ap-south-1"
     encrypt      = true

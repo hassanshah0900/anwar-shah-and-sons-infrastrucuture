@@ -1,5 +1,10 @@
+data "aws_region" "current" {}
+
+data "aws_caller_identity" "current" {}
+
 resource "aws_s3_bucket" "state" {
-  bucket = "${var.project}-state-${var.account_id}-${var.region}"
+  bucket           = "${var.project}-state-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an"
+  bucket_namespace = "account-regional"
 
   force_destroy = false
 
