@@ -23,7 +23,7 @@ variable "public_subnet_ids" {
   description = "List of public subnet IDs for the Application Load Balancer"
 }
 
-variable "private_subnet_ids" {
+variable "app_subnet_ids" {
   type        = list(string)
   description = "List of private subnet IDs for the Auto Scaling Group"
 }

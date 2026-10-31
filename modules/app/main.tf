@@ -180,7 +180,7 @@ resource "aws_autoscaling_group" "app" {
     version = aws_launch_template.app.latest_version
   }
 
-  vpc_zone_identifier = var.private_subnet_ids
+  vpc_zone_identifier = var.app_subnet_ids
 
   availability_zone_distribution {
     capacity_distribution_strategy = "balanced-best-effort"
