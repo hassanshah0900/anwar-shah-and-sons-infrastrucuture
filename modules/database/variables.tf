@@ -13,7 +13,7 @@ variable "environment" {
   description = "The deployment environment (e.g., dev, staging, prod)."
 }
 
-variable "private_subnet_ids" {
+variable "db_subnet_ids" {
   type        = list(string)
   description = "A list of private subnet IDs where the Aurora database instances will be placed."
 }
