@@ -4,7 +4,7 @@ locals {
 
 resource "aws_db_subnet_group" "postgresql" {
   name       = "${local.name_prefix}-postgresql-subnet-group"
-  subnet_ids = var.private_subnet_ids
+  subnet_ids = var.db_subnet_ids
 }
 
 resource "aws_security_group" "postgresql" {
